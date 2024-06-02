@@ -1,20 +1,29 @@
+require "./Materia"
+
 class Alumno
 	@nombre : String
 	@padron : Int32
 	@carrera : String
-	@inscripciones : [] of Materia
-	@aprobadas : [] of Materia
-	@desaprobadas : [] of Materia
+	@inscripciones : Array(Materia) 
+	@materias : Array(Materia) 
 
-	def historiaAcademica()
-	  #materias aprobadas, desaprobadas, y cursando actualmente  
+	def initialize(nombre : String, padron : Int32, carrera : String)
+		@nombre = nombre
+		@padron = padron
+		@carrera = carrera
+		@inscripciones = Array()
+		@materias = Array()
 	end
 
-	def bool inscripcion()
+	def historiaAcademica()
+	  @materias
+	end
+
+	def inscripcion() : Bool
 	  #inscribirme a una materia
 	end
 
-	def bool anularInscripcion()
+	def anularInscripcion() : Bool
 	  #desinscribirme a una materia
 	end
 

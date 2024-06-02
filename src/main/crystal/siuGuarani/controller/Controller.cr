@@ -1,5 +1,7 @@
+require "../modelo/Alumno"
+
 class Controller
-    @alumno : Alumno
+   # @alumno : Alumno
 
     def signIn()
         #registrarse
@@ -9,21 +11,19 @@ class Controller
         #loguearse
     end
 
-    def historiaAcademica()
-        #materias aprobadas, desaprobadas, y cursando actualmente
-    end
-
-    def misInscripciones()
-        #mis inscripciones
-    end
-
-    def bool inscripcion()
-        #inscribirme a una materia
-    end
-
-    def bool anularInscripcion()
-        #desinscribirse a una materia
-    end
-    
+    def menuPrincipal()
+        opcion : Int32
+        case opcion
+        when 1
+            materias = this.alumno.historiaAcademica()
+        when 2
+            #mis inscripciones 
+        when 3
+            # inscribirse 
+        when 4
+            # anular inscripcion 
+        end
+    end 
 end
+
 
