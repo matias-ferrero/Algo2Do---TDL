@@ -25,11 +25,11 @@ class Alumno
 		return @materias.filter { |Materia| materia.obtenerInscripcion() }
 	end
 
-	def inscripcion() : Bool
-		#inscribirme a una materia
+	def inscripcion(opcion : Int32) : Bool
+		return this.materias[opcion].inscripcion()
 	end
 
-	def anularInscripcion() : Bool
-		#desinscribirme a una materia
+	def anularInscripcion(opcion : Int32)
+		this.materias[opcion].anularInscripcion()
 	end
 end

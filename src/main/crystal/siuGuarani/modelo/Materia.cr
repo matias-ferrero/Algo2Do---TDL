@@ -38,4 +38,19 @@ class Materia
 	def obtenerMaxInscriptos()
 		return @maxInscriptos
 	end
+
+	def inscripcion() : Bool
+		if this.cantInscriptos < this.maxInscriptos
+			this.inscripto == true
+			this.cantInscriptos++
+			return true
+		end
+
+		return false
+	end
+
+	def anularInscripcion()
+		this.inscripto == false
+		this.cantInscriptos--
+	end
 end
