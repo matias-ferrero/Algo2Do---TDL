@@ -1,4 +1,6 @@
 require "../modelo/Materia"
+require "../vista/VistaMateria"
+
 
 class VistaMateriaController
 	@vistaMateria : VistaMateria
@@ -8,10 +10,10 @@ class VistaMateriaController
 	end
 
 	def imprimirMateriasInscripcion(materias : Array(Materia))
-		this.vistaMateria.imprimirMensaje("Seleccione el indice de la materia a inscribirse\n")
+		@vistaMateria.imprimirMensaje("Seleccione el indice de la materia a inscribirse\n")
 		i = 0
-		for materia in materias:
-			this.vistaMateria.imprimirMateriaInscripcion(i++,
+		materias.each do |materia|
+			@vistaMateria.imprimirMateriaInscripcion(i+=1,
 								     materia.obtenerNombre,
 								     materia.obtenerId,
 								     materia.obtenerCantInscriptos,
@@ -20,10 +22,10 @@ class VistaMateriaController
 	end
 
 	def imprimirMateriasHistorial(materias : Array(Materia))
-		this.vistaMateria.imprimirMensaje("Tu historial acamedico es:\n")
+		@vistaMateria.imprimirMensaje("Tu historial acamedico es:\n")
 		i = 0
-		for materia in materias:
-			this.vistaMateria.imprimirMateriaHistorial(i++,
+		materias.each do |materia|
+			@vistaMateria.imprimirMateriaHistorial(i+=1,
 								   materia.obtenerNombre,
 								   materia.obtenerId,
 								   materia.obtenerNota)

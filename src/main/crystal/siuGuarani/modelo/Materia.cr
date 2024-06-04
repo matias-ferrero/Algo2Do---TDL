@@ -2,7 +2,7 @@ class Materia
 	@nombre : String
 	@id : Int32
 	@nota : Int32
-	@inscripto: Bool
+	@inscripto : Bool
 	@cantInscriptos : Int32
 	@maxInscriptos : Int32
 
@@ -27,7 +27,7 @@ class Materia
 		return @nota
 	end
 
-    	def obtenerInscripcion()
+	def obtenerInscripcion()
 		return @inscripto
 	end
 
@@ -40,9 +40,9 @@ class Materia
 	end
 
 	def inscripcion() : Bool
-		if this.cantInscriptos < this.maxInscriptos
-			this.inscripto == true
-			this.cantInscriptos++
+		if @cantInscriptos < @maxInscriptos
+			@inscripto == true
+			@cantInscriptos += 1
 			return true
 		end
 
@@ -50,7 +50,7 @@ class Materia
 	end
 
 	def anularInscripcion()
-		this.inscripto == false
-		this.cantInscriptos--
+		@inscripto == false
+		@cantInscriptos -= 1
 	end
 end

@@ -10,7 +10,7 @@ class Alumno
 		@nombre = nombre
 		@padron = padron
 		@carrera = carrera
-		@materias = Array()
+		@materias = Array(Materia).new
 	end
 
 	def obtenerMaterias() : Array(Materia)
@@ -18,18 +18,18 @@ class Alumno
 	end
 	
 	def historiaAcademica() : Array(Materia)
-		return @materias.filter { |Materia| materia.obtenerNota() > 0 }
+		return @materias.select { |materia| materia.obtenerNota() > 0 }
 	end
 
 	def misInscripciones() : Array(Materia)
-		return @materias.filter { |Materia| materia.obtenerInscripcion() }
+		return @materias.select { |materia| materia.obtenerInscripcion() }
 	end
 
 	def inscripcion(opcion : Int32) : Bool
-		return this.materias[opcion].inscripcion()
+		return @materias[opcion].inscripcion()
 	end
 
 	def anularInscripcion(opcion : Int32)
-		this.materias[opcion].anularInscripcion()
+		@materias[opcion].anularInscripcion()
 	end
 end

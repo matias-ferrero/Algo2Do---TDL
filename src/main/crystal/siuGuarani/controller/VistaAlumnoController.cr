@@ -1,4 +1,5 @@
 require "../modelo/Alumno"
+require "../vista/VistaAlumno"
 
 class VistaAlumnoController
 	@alumno : Alumno

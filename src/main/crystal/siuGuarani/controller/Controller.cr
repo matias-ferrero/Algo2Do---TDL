@@ -1,5 +1,7 @@
 require "../modelo/Alumno"
 require "./VistaAlumnoController"
+require "./VistaMateriaController"
+require "../vista/VistaSistema"
 
 class Controller
 	private ERROR = -1
@@ -11,16 +13,17 @@ class Controller
 	@vistaMateriaController : VistaMateriaController
 	@terminado : Bool
 
-	def initialize()
-		#@alumno = algo
+	def initialize(alumno : Alumno)
+		@alumno = alumno
 		@vistaSistema = VistaSistema.new()
-		@vistaAlumnoController = VistaAlumnoController.new(this.alumno)
+		@vistaAlumnoController = VistaAlumnoController.new(@alumno)
 		@vistaMateriaController = VistaMateriaController.new()
 		@terminado = false
+		puts "Termino el constructor"
 	end
 
 	def salir()
-		return this.terminado
+		return @terminado
 	end
 
 	def signIn()
@@ -31,75 +34,78 @@ class Controller
 		#loguearse
 	end
 	
-    	def menuPrincipal()
-		this.vistaSistema.imprimirMensaje("")#Todo: Texto
-		opcion = leerInt(gets.chomp)
+	def menuPrincipal()
+		puts "Entre al menu principal"
+		@vistaSistema.imprimirMensaje("")#Todo: Texto
+		opcion = leerInt(gets.to_s.chomp)
+		printf "La opcion es %d \n", opcion
 		case opcion
 			when SALIR
-				this.terminado = true
+				@terminado = true
 			when 1
-				materias = this.alumno.historiaAcademica()
-				this.vistaMateriaController.imprimirMateriasHistorial(materias)
+				materias = @alumno.historiaAcademica()
+				@vistaMateriaController.imprimirMateriasHistorial(materias)
 			when 2
-				materias = this.alumno.misInscripciones()
-				this.vistaMateriaController.imprimirMateriasHistorial(materias)
+				materias = @alumno.misInscripciones()
+				@vistaMateriaController.imprimirMateriasHistorial(materias)
 			when 3
-				this.seleccionarMateriaParaInscripcion()
+				seleccionarMateriaParaInscripcion()
 			when 4
-				this.seleccionarMateriaParaAnular()
+				seleccionarMateriaParaAnular()
 			else
 
-		end
-    	end
+			end
+	end
 
-	private
-	def seleccionarMateriaParaInscripcion()
-		materias = this.alumno.obtenerMaterias()
-		this.vistaMateriaController.imprimirMateriasInscripcion(materias)
+	private def seleccionarMateriaParaInscripcion()
+		materias = @alumno.obtenerMaterias()
+		@vistaMateriaController.imprimirMateriasInscripcion(materias)
 		opcion = pedirMateria(materias)
 
 		if opcion == SALIR
 			return
 		end
 
-		if !this.alumno.inscripcion(opcion-1)
-			this.vistaSistema.imprimirMensaje("No hay mas cupos en esta materia!")
+		if !@alumno.inscripcion(opcion-1)
+			@vistaSistema.imprimirMensaje("No hay mas cupos en esta materia!")
 		else
-			this.vistaSistema.imprimirMensaje("Inscripcion valida!")
+			@vistaSistema.imprimirMensaje("Inscripcion valida!")
 		end
 	end
 
-	def seleccionarMateriaParaAnular()
-		materias = this.alumno.misInscripciones()
-		this.vistaMateriaController.imprimirMateriasInscripcion(materias)
+	private def seleccionarMateriaParaAnular()
+		materias = @alumno.misInscripciones()
+		@vistaMateriaController.imprimirMateriasInscripcion(materias)
 		opcion = pedirMateria(materias)
 
 		if opcion == SALIR
 			return
 		end
 
-		this.alumno.anularInscripcion(opcion-1)
-		.vistaSistema.imprimirMensaje("Inscripcion anulada!")
+		@alumno.anularInscripcion(opcion-1)
+		@vistaSistema.imprimirMensaje("Inscripcion anulada!")
 		
 	end
 
-	def pedirMateria(materias : Array(Materia)): Int32
+	private def pedirMateria(materias : Array(Materia)) : Int32
 		opcionValida = false
-		this.VistaSistema.imprimirMensaje("Seleccione una materia")
+		@vistaSistema.imprimirMensaje("Seleccione una materia")
+		#deberia inicializar opcion en 0 aca, para poder devolver algo q no es nil !!
+		opcion = 0
 
 		while !opcionValida
-			opcion = leerInt(gets.chomp)
+			opcion = leerInt(gets.to_s.chomp)
 
 			if opcion < SALIR || opcion > materias.size
-				this.VistaSistema.imprimirMensaje("Seleccione una opcion correcta!")
+				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!")
 			else
 				opcionValida = true
 			end
 		end
-		return opcion
+		return opcion #aca parece que si opcion ES valida, esta devolviendo un posible nil!!
 	end
 
-	def leerInt(input : String) : Int32
+	private def leerInt(input : String) : Int32
 		default = ERROR
 		begin
 			return input.to_i
