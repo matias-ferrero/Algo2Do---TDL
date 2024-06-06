@@ -1,29 +1,116 @@
+require "../modelo/Alumno"
+require "./VistaAlumnoController"
+require "./VistaMateriaController"
+require "../vista/VistaSistema"
+
 class Controller
-    @alumno : Alumno
+	private ERROR = -1
+	private SALIR = 0
 
-    def signIn()
-        #registrarse
-    end
+   	@alumno : Alumno
+	@vistaSistema : VistaSistema
+	@vistaAlumnoController : VistaAlumnoController
+	@vistaMateriaController : VistaMateriaController
+	@terminado : Bool
 
-    def logIn()
-        #loguearse
-    end
+	def initialize(alumno : Alumno)
+		@alumno = alumno
+		@vistaSistema = VistaSistema.new()
+		@vistaAlumnoController = VistaAlumnoController.new(@alumno)
+		@vistaMateriaController = VistaMateriaController.new()
+		@terminado = false
+		puts "Termino el constructor"
+	end
 
-    def historiaAcademica()
-        #materias aprobadas, desaprobadas, y cursando actualmente
-    end
+	def salir()
+		return @terminado
+	end
 
-    def misInscripciones()
-        #mis inscripciones
-    end
+	def signIn()
+		#registrarse
+	end
 
-    def bool inscripcion()
-        #inscribirme a una materia
-    end
+	def logIn()
+		#loguearse
+	end
+	
+	def menuPrincipal()
+		puts "Entre al menu principal"
+		@vistaSistema.imprimirMensaje("")#Todo: Texto
+		opcion = leerInt(gets.to_s.chomp)
+		printf "La opcion es %d \n", opcion
+		case opcion
+			when SALIR
+				@terminado = true
+			when 1
+				materias = @alumno.historiaAcademica()
+				@vistaMateriaController.imprimirMateriasHistorial(materias)
+			when 2
+				materias = @alumno.misInscripciones()
+				@vistaMateriaController.imprimirMateriasHistorial(materias)
+			when 3
+				seleccionarMateriaParaInscripcion()
+			when 4
+				seleccionarMateriaParaAnular()
+			else
 
-    def bool anularInscripcion()
-        #desinscribirse a una materia
-    end
-    
+			end
+	end
+
+	private def seleccionarMateriaParaInscripcion()
+		materias = @alumno.obtenerMaterias()
+		@vistaMateriaController.imprimirMateriasInscripcion(materias)
+		opcion = pedirMateria(materias)
+
+		if opcion == SALIR
+			return
+		end
+
+		if !@alumno.inscripcion(opcion-1)
+			@vistaSistema.imprimirMensaje("No hay mas cupos en esta materia!")
+		else
+			@vistaSistema.imprimirMensaje("Inscripcion valida!")
+		end
+	end
+
+	private def seleccionarMateriaParaAnular()
+		materias = @alumno.misInscripciones()
+		@vistaMateriaController.imprimirMateriasInscripcion(materias)
+		opcion = pedirMateria(materias)
+
+		if opcion == SALIR
+			return
+		end
+
+		@alumno.anularInscripcion(opcion-1)
+		@vistaSistema.imprimirMensaje("Inscripcion anulada!")
+		
+	end
+
+	private def pedirMateria(materias : Array(Materia)) : Int32
+		opcionValida = false
+		@vistaSistema.imprimirMensaje("Seleccione una materia")
+		#deberia inicializar opcion en 0 aca, para poder devolver algo q no es nil !!
+		opcion = 0
+
+		while !opcionValida
+			opcion = leerInt(gets.to_s.chomp)
+
+			if opcion < SALIR || opcion > materias.size
+				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!")
+			else
+				opcionValida = true
+			end
+		end
+		return opcion #aca parece que si opcion ES valida, esta devolviendo un posible nil!!
+	end
+
+	private def leerInt(input : String) : Int32
+		default = ERROR
+		begin
+			return input.to_i
+		rescue
+			return default
+		end
+	end
 end
-

@@ -1,29 +1,15 @@
-class Controller
-    @alumno : Alumno
+require "./controller/Controller"
+require "./modelo/Alumno"
 
-    def signIn()
-        #registrarse
-    end
+class Main
 
-    def logIn()
-        #loguearse
-    end
-
-    def historiaAcademica()
-        #materias aprobadas, desaprobadas, y cursando actualmente
-    end
-
-    def misInscripciones()
-        #mis inscripciones
-    end
-
-    def bool inscripcion()
-        #inscribirme a una materia
-    end
-
-    def bool anularInscripcion()
-        #desinscribirse a una materia
-    end
-    
+	def self.main()
+		alumno = Alumno.new("Franco Ricciardo", 109907, "Ingenieria en Informatica")
+		controlador = Controller.new(alumno)
+		while !controlador.salir()
+			controlador.menuPrincipal()
+		end
+	end
 end
 
+Main.main
