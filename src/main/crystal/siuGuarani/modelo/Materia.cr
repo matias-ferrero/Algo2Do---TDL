@@ -3,6 +3,7 @@ class Materia
 	@id : Int32
 	@nota : Int32
 	@inscripto : Bool
+	@docente : String
 	@cantInscriptos : Int32
 	@maxInscriptos : Int32
 
@@ -11,6 +12,7 @@ class Materia
 		@id = id
         	@nota = 0
 		@inscripto = false
+		@docente = ""
 		@cantInscriptos = 0
         	@maxInscriptos = 0
 	end

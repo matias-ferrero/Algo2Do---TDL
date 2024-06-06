@@ -14,10 +14,10 @@ class VistaMateriaController
 		i = 0
 		materias.each do |materia|
 			@vistaMateria.imprimirMateriaInscripcion(i+=1,
-								     materia.obtenerNombre,
-								     materia.obtenerId,
-								     materia.obtenerCantInscriptos,
-								     materia.obtenerMaxInscriptos)
+								 materia.obtenerNombre,
+								 materia.obtenerId,
+								 materia.obtenerCantInscriptos,
+								 materia.obtenerMaxInscriptos)
 		end
 	end
 
@@ -26,9 +26,9 @@ class VistaMateriaController
 		i = 0
 		materias.each do |materia|
 			@vistaMateria.imprimirMateriaHistorial(i+=1,
-								   materia.obtenerNombre,
-								   materia.obtenerId,
-								   materia.obtenerNota)
+							       materia.obtenerNombre,
+							       materia.obtenerId,
+							       materia.obtenerNota)
 		end
 	end
 end
