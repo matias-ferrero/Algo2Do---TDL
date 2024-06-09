@@ -22,16 +22,27 @@ class Controller
 		puts "Termino el constructor"
 	end
 
-	def salir()
+	def salir() : Bool
 		return @terminado
 	end
 
-	def signIn()
+	def signUp()
 		#registrarse
 	end
 
 	def logIn()
-		#loguearse
+		# Consulta SQL para buscar un alumno por DNI y contraseña
+		query = "SELECT * FROM alumnos WHERE dni = ? AND password = ?"
+		
+		# Ejecutar la consulta SQL y obtener el resultado
+		result = Alumno.connection.query(query, dni, password)
+
+		#Si se encontró un alumno, devolverlo
+		if result.any?
+			return Alumno.new(result[0])
+		else
+			return nil
+		end
 	end
 	
 	def menuPrincipal()
@@ -90,8 +101,7 @@ class Controller
 	private def pedirMateria(materias : Array(Materia)) : Int32
 		opcionValida = false
 		@vistaSistema.imprimirMensaje("Seleccione una materia")
-		#deberia inicializar opcion en 0 aca, para poder devolver algo q no es nil !!
-		opcion = 0
+		opcion = ERROR
 
 		while !opcionValida
 			opcion = leerInt(gets.to_s.chomp)
@@ -102,7 +112,7 @@ class Controller
 				opcionValida = true
 			end
 		end
-		return opcion #aca parece que si opcion ES valida, esta devolviendo un posible nil!!
+		return opcion
 	end
 
 	private def leerInt(input : String) : Int32

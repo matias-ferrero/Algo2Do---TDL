@@ -1,16 +1,22 @@
-class Materia
+require "../../../../../lib/granite_orm/src/granite_orm"
+
+class Materia < Granite::ORM::Base
+	table name: "materias"
+
 	@nombre : String
-	@id : Int32
+	@codigo : Int32
 	@nota : Int32
 	@inscripto : Bool
+	@docente : String
 	@cantInscriptos : Int32
 	@maxInscriptos : Int32
 
-    	def initialize(nombre : String, id : Int32, inscriptos : Int32)
+    	def initialize(nombre : String, codigo : Int32, cantInscriptos : Int32)
 		@nombre = nombre
-		@id = id
+		@codigo = codigo
         	@nota = 0
 		@inscripto = false
+		@docente = ""
 		@cantInscriptos = 0
         	@maxInscriptos = 0
 	end
@@ -19,8 +25,8 @@ class Materia
 		return @nombre
 	end
 
-	def obtenerId()
-		return @id
+	def obtenerCodigo()
+		return @codigo
 	end
 
 	def obtenerNota()

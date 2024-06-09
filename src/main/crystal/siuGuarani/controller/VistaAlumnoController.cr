@@ -11,6 +11,9 @@ class VistaAlumnoController
 	end
 
 	def imprimirAlumno()
-		#hago cosas
+		@vistaAlumno.imprimirAlumno(@alumno.obtenerNombre(),
+					    @alumno.obtenerDni(),
+					    @alumno.obtenerPadron(),
+					    @alumno.obtenerCarrera())
 	end
 end

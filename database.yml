@@ -1,0 +1,6 @@
+development:
+  adapter: postgres
+  database: primer_bdd
+  host: localhost
+  username: postgres
+  password: crystal_tdl

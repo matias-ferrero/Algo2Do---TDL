@@ -1,0 +1,11 @@
+name: Crystal_TDL
+version: 0.1.0
+
+dependencies:
+  pg:
+    github: will/crystal-pg
+  granite_orm:
+    github: amberframework/granite
+    version: ~> 0.7.0
+  json:
+    github: crystal-lang/crystal
