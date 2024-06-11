@@ -2,25 +2,16 @@ require "./Materia"
 
 class Alumno
 	@nombre : String
-	@dni : Int32
-	@padron : Int32
-	@carrera : String
-	@materias : Array(Materia)
+	@carreras : 
+	@materias : Hash(String, Array(Materia))
 
-	def initialize(nombre : String, padron : Int32, carrera : String)
+	def initialize(nombre : String, materias : Hash(String, Array(Materia)))
 		@nombre = nombre
-		@dni = 0
-		@padron = padron
-		@carrera = carrera
-		@materias = Array(Materia).new
+		@materias = materias
 	end
 
 	def obtenerNombre() : String
 		return @nombre
-	end
-
-	def obtenerDni() : Int32
-		return @dni
 	end
 
 	def obtenerPadron() : Int32

@@ -1,58 +1,42 @@
 class Materia
 	@nombre : String
 	@id : Int32
+	@docente : String
 	@nota : Int32
 	@inscripto : Bool
-	@docente : String
-	@cantInscriptos : Int32
-	@maxInscriptos : Int32
 
-    	def initialize(nombre : String, id : Int32, inscriptos : Int32)
+    	def initialize(nombre : String,
+		       id : String,
+		       docente : String,
+		       inscriptos : Int32)
 		@nombre = nombre
 		@id = id
+		@docente = docente
         	@nota = 0
 		@inscripto = false
-		@docente = ""
-		@cantInscriptos = 0
-        	@maxInscriptos = 0
 	end
 
-	def obtenerNombre()
+	def obtenerNombre() : String
 		return @nombre
 	end
 
-	def obtenerId()
+	def obtenerId() : String
 		return @id
 	end
 
-	def obtenerNota()
+	def obtenerNota() : Int32
 		return @nota
 	end
 
-	def obtenerInscripcion()
+	def obtenerInscripcion() : Bool
 		return @inscripto
 	end
 
-	def obtenerCantInscriptos()
-		return @cantInscriptos
-	end
-
-	def obtenerMaxInscriptos()
-		return @maxInscriptos
-	end
-
-	def inscripcion() : Bool
-		if @cantInscriptos < @maxInscriptos
-			@inscripto == true
-			@cantInscriptos += 1
-			return true
-		end
-
-		return false
+	def inscripcion()
+		@inscripto == true
 	end
 
 	def anularInscripcion()
 		@inscripto == false
-		@cantInscriptos -= 1
 	end
 end

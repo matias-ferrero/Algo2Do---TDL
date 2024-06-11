@@ -1,5 +1,4 @@
 class VistaMateria
-	include Vista
 
 	def imprimirMensaje(mensaje : String)
 		printf "%s", mensaje
