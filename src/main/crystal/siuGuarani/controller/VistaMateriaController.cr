@@ -15,9 +15,7 @@ class VistaMateriaController
 		materias.each do |materia|
 			@vistaMateria.imprimirMateriaInscripcion(i+=1,
 								 materia.obtenerNombre,
-								 materia.obtenerId,
-								 materia.obtenerCantInscriptos,
-								 materia.obtenerMaxInscriptos)
+								 materia.obtenerId)
 		end
 	end
 
@@ -32,20 +30,4 @@ class VistaMateriaController
 		end
 	end
 
-	def pedirMateria(materias : Array(Materia)) : Int32
-		opcionValida = false
-		@vistaMateria.imprimirMensaje("Seleccione una materia")
-		opcion = ERROR
-
-		while !opcionValida
-			opcion = leerInt(gets.to_s.chomp)
-
-			if opcion < SALIR || opcion > materias.size
-				@vistaMateria.imprimirMensaje("Seleccione una opcion correcta!")
-			else
-				opcionValida = true
-			end
-		end
-		return opcion
-	end
 end

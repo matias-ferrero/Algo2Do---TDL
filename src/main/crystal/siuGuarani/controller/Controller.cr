@@ -1,5 +1,5 @@
 require "../modelo/Alumno"
-require "./VistaAlumnoController"
+require "../modelo/Materia"
 require "./VistaMateriaController"
 require "../vista/VistaSistema"
 
@@ -30,11 +30,12 @@ class Controller
 		@vistaSistema.imprimirMensaje("Ingrese su nombre\n")
 		nombre = gets.to_s.chomp
 		materias = pedirCarreras()
-		return Alumno.new(nombre, materias)
+		return Alumno.new(nombre, materias, "carreraActual") # <- TODO Funcion para Setear carreraActual
 	end
 	
 	def menuPrincipal()
 		puts "Entre al menu principal\n"
+
 		@vistaSistema.mostrarMenu(@alumno.obtenerNombre())
 		opcion = leerInt(gets.to_s.chomp)
 		printf "La opcion es %d \n", opcion
@@ -108,28 +109,27 @@ class Controller
 		carreras["Sistemas"] << Materia.new("Modelos y Optimizacion II", "9105", "Claudia Gioscio")
 		carreras["Sistemas"] << Materia.new("Administracion y Control de Proyectos Informaticos I", "9524", "Moises Fontela")
 		carreras["Sistemas"] << Materia.new("Redes y Aplicaciones Distribuidas I", "9560", "Jose Ignacio Alvarez")
-		carreras["Sistemas"] << Materia.new("Diseno, Operacion y Gestion de Servicios Informaticos", "9559", "Gustavo Carolo")
-						#TODO: Corregir "Diseno"
+		carreras["Sistemas"] << Materia.new("Diseño, Operacion y Gestion de Servicios Informaticos", "9559", "Gustavo Carolo")
 		carreras["Sistemas"] << Materia.new("Legislacion y Ejercicio Profesional en Sistemas e Informatica", "9140", "Adrian Noremberg")
 		carreras["Sistemas"] << Materia.new("Estandares de Calidad y Modelos de Referencia", "9530", "Diego Fontdevila")
 		carreras["Sistemas"] << Materia.new("Trabajo Profesional de Licenciatura de Analisis en Sistemas", "TA052", "A Designar")
+		
+		return carreras
 	end
 	
-	private def pedirCarreras(): Hash(String, Array(Materia))
-		nombres = Array(String)
-		carreras = @carreras.keys
-		materias = Hash(String, Array(Materia)).new()
+	private def pedirCarreras() : Hash(String, Array(Materia))
+		listaCarreras = @carreras.keys
+		listaMaterias = Hash(String, Array(Materia)).new()
 
-		carreras.each do |carrera|
-			nombres.push(carrera.obtenerNombre())
-		end
-		@vistaSistema.imprimirCarreras(nombres)
+		@vistaSistema.imprimirCarreras(listaCarreras)
 
 		opcion = leerInt(gets.to_s.chomp)
-		clave = carreras[opcion]
+		clave = listaCarreras[opcion-1]
 
-		materias[clave] << @carreras[clave] 
-		return materias
+		listaMaterias[clave] ||= Array(Materia).new()
+		listaMaterias[clave] = listaMaterias[clave] + @carreras[clave] 
+
+		return listaMaterias
 
 	end
 
@@ -161,6 +161,23 @@ class Controller
 		@alumno.anularInscripcion(opcion-1)
 		@vistaSistema.imprimirMensaje("Inscripcion anulada!")
 		
+	end
+
+	private def pedirMateria(materias : Array(Materia)) : Int32
+		opcionValida = false
+		@vistaSistema.imprimirMensaje("Seleccione una materia")
+		opcion = ERROR
+
+		while !opcionValida
+			opcion = leerInt(gets.to_s.chomp)
+
+			if opcion < SALIR || opcion > materias.size
+				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!")
+			else
+				opcionValida = true
+			end
+		end
+		return opcion
 	end
 
 	private def leerInt(input : String) : Int32

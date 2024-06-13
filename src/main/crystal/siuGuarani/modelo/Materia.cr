@@ -1,14 +1,13 @@
 class Materia
 	@nombre : String
-	@id : Int32
+	@id : String
 	@docente : String
 	@nota : Int32
 	@inscripto : Bool
 
     	def initialize(nombre : String,
 		       id : String,
-		       docente : String,
-		       inscriptos : Int32)
+		       docente : String)
 		@nombre = nombre
 		@id = id
 		@docente = docente
@@ -24,6 +23,10 @@ class Materia
 		return @id
 	end
 
+	def obtenerDocente() : String
+		return @docente
+	end
+
 	def obtenerNota() : Int32
 		return @nota
 	end
@@ -32,11 +35,21 @@ class Materia
 		return @inscripto
 	end
 
-	def inscripcion()
-		@inscripto == true
+	def inscripcion() : Bool
+		if @inscripto == true
+			return false
+		end
+
+		@inscripto = true
+		return true
 	end
 
-	def anularInscripcion()
-		@inscripto == false
+	def anularInscripcion() : Bool
+		if @inscripto == false
+			return false
+		end
+		
+		@inscripto = false
+		return true
 	end
 end

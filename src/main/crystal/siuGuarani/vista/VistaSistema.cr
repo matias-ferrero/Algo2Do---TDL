@@ -13,7 +13,7 @@ class VistaSistema
 		printf "5 : Rendirse\n"
 	end
 
-	def mostrarCarreras(nombres : Array(String))
+	def imprimirCarreras(nombres : Array(String))
 		printf "\nSeleccione una opcion:\n"
 		i = 1
 		nombres.each do |nombre|
