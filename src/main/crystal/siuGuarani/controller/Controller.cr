@@ -34,8 +34,8 @@ class Controller
 	end
 	
 	def menuPrincipal()
-		puts "Entre al menu principal"
-		@vistaSistema.imprimirMensaje("")#Todo: Texto
+		puts "Entre al menu principal\n"
+		@vistaSistema.mostrarMenu(@alumno.obtenerNombre())
 		opcion = leerInt(gets.to_s.chomp)
 		printf "La opcion es %d \n", opcion
 		case opcion
@@ -116,9 +116,21 @@ class Controller
 	end
 	
 	private def pedirCarreras(): Hash(String, Array(Materia))
+		nombres = Array(String)
+		carreras = @carreras.keys
 		materias = Hash(String, Array(Materia)).new()
-		@vistaSistema.imprimirMensaje("Ingrese su carrera:\n")
-		nombre = gets.to_s.chomp
+
+		carreras.each do |carrera|
+			nombres.push(carrera.obtenerNombre())
+		end
+		@vistaSistema.imprimirCarreras(nombres)
+
+		opcion = leerInt(gets.to_s.chomp)
+		clave = carreras[opcion]
+
+		materias[clave] << @carreras[clave] 
+		return materias
+
 	end
 
 	private def seleccionarMateriaParaInscripcion()

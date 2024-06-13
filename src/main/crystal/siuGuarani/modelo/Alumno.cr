@@ -2,7 +2,6 @@ require "./Materia"
 
 class Alumno
 	@nombre : String
-	@carreras : 
 	@materias : Hash(String, Array(Materia))
 
 	def initialize(nombre : String, materias : Hash(String, Array(Materia)))
