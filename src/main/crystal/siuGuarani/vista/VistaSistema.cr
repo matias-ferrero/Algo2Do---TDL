@@ -6,11 +6,12 @@ class VistaSistema
 
 	def mostrarMenu(nombre : String)
 		printf "\n%s seleccione una opcion:\n", nombre
-		printf "1 : Ver Campo\n" 
-		printf "2 : Usar Habilidad\n"
-		printf "3 : Usar Item\n"
-		printf "4 : Cambiar Pokemon\n"
-		printf "5 : Rendirse\n"
+		printf "1 : Historia Academica\n" 
+		printf "2 : Mis Inscripciones\n"
+		printf "3 : Inscribirme a una Materia\n"
+		printf "4 : Anular una Inscripcion a Materia\n"
+		printf "5 : Tramitar Simultaneidad con otra Carrera\n"
+		printf "0 : Salir\n"
 	end
 
 	def imprimirCarreras(nombres : Array(String))

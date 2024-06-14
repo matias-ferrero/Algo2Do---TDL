@@ -22,7 +22,7 @@ class Alumno
 	def obtenerMaterias() : Array(Materia)
 		return @materias[@carreraActual]
 	end
-	
+
 	def historiaAcademica() : Array(Materia)
 		return @materias[@carreraActual].select { |materia| materia.obtenerNota() > 0 }
 	end
@@ -39,5 +39,17 @@ class Alumno
 	def anularInscripcion(opcion : Int32) : Bool
 		listaMaterias = @materias[@carreraActual]
 		return listaMaterias[opcion].anularInscripcion()
+	end
+
+	def agregarCarrera(carreras : Hash(String, Array(Materia))) : Bool
+		
+		@materias.each do |materia|
+			if materia == carreras.keys[0]
+				return false
+			end
+		end
+
+		@materias.merge!(carreras)
+		return true 
 	end
 end

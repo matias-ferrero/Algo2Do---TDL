@@ -10,7 +10,6 @@ class VistaMateriaController
 	end
 
 	def imprimirMateriasInscripcion(materias : Array(Materia))
-		@vistaMateria.imprimirMensaje("Seleccione el indice de la materia a inscribirse\n")
 		i = 0
 		materias.each do |materia|
 			@vistaMateria.imprimirMateriaInscripcion(i+=1,
@@ -20,7 +19,6 @@ class VistaMateriaController
 	end
 
 	def imprimirMateriasHistorial(materias : Array(Materia))
-		@vistaMateria.imprimirMensaje("Tu historial acamedico es:\n")
 		i = 0
 		materias.each do |materia|
 			@vistaMateria.imprimirMateriaHistorial(i+=1,
