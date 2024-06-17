@@ -52,4 +52,12 @@ class Materia
 		@inscripto = false
 		return true
 	end
+	
+	def rendir(nota : Int32)
+		@nota = nota
+
+		if @nota >= 4
+			@inscripto = false
+		end
+	end
 end

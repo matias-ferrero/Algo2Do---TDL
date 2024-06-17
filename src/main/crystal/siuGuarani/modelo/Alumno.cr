@@ -19,8 +19,16 @@ class Alumno
 		return @carreraActual
 	end
 
+	def obtenerCarreras() : Array(String)
+		return @materias.keys		
+	end
+
 	def obtenerMaterias() : Array(Materia)
 		return @materias[@carreraActual]
+	end
+
+	def modificarCarreraActual(carreraActual : String)
+		@carreraActual = carreraActual
 	end
 
 	def historiaAcademica() : Array(Materia)
@@ -32,13 +40,18 @@ class Alumno
 	end
 
 	def inscripcion(opcion : Int32) : Bool
-		listaMaterias = @materias[@carreraActual]
+		listaMaterias = misInscripciones()
 		return listaMaterias[opcion].inscripcion()
 	end
 
 	def anularInscripcion(opcion : Int32) : Bool
-		listaMaterias = @materias[@carreraActual]
+		listaMaterias = misInscripciones()
 		return listaMaterias[opcion].anularInscripcion()
+	end
+
+	def rendirMateria(opcion : Int32)
+		listaMaterias = misInscripciones()
+		listaMaterias[opcion].rendir()
 	end
 
 	def agregarCarrera(carreras : Hash(String, Array(Materia))) : Bool
