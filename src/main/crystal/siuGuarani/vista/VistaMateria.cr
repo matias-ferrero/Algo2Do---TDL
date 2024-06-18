@@ -1,13 +1,10 @@
 class VistaMateria
 
-	def imprimirMensaje(mensaje : String)
-		printf "%s", mensaje
-	end
-
 	def imprimirMateriaInscripcion(indice : Int32,
 				       nombre : String,
-				       id : String)
-		printf "%d) %s (%s)\n", indice, nombre, id
+				       id : String,
+				       docente : String)
+		printf "%d) %s (%s), Catedra: %s\n", indice, nombre, id, docente
 	end
 
 	def imprimirMateriaHistorial(indice : Int32,

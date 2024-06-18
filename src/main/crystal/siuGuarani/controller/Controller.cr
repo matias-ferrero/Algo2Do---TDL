@@ -4,7 +4,6 @@ require "./VistaMateriaController"
 require "../vista/VistaSistema"
 
 class Controller
-	private ERROR = -1
 	private SALIR = 0
 
    	@alumno : Alumno
@@ -57,13 +56,13 @@ class Controller
 				@vistaSistema.imprimirMensaje("Seleccione el indice de la Materia a la cual se quiere desinscribir\n")
 				seleccionarMateriaParaAnular()
 			when 5
-				@vistaSistema.imprimirMensaje("Seleccione la materia que va a rendir")
+				@vistaSistema.imprimirMensaje("Seleccione la materia que va a rendir:\n")
 				rendirMateria()
 			when 6
-				@vistaSistema.imprimirMensaje("Seleccione el indice de la Carrera a la cual se quiere inscribir\n")
+				@vistaSistema.imprimirMensaje("Seleccione una Carrera (que no sea la misma) para Inscribirse\n")
 				tramitarSimultaneidad()
 			when 7
-				@vistaSistema.imprimirMensaje()
+				@vistaSistema.imprimirMensaje("Seleccione en que carrera quiere posicionarse\n")
 				cambiarCarreraActual()
 			else
 				@vistaSistema.imprimirMensaje("Seleccione una Opcion Correcta!\n")
@@ -73,7 +72,7 @@ class Controller
 	private def pedirCarrerasSinSalida() : Hash(String, Array(Materia))
 		listaCarreras = @carreras.keys
 		listaMaterias = Hash(String, Array(Materia)).new()
-		opcion = ERROR
+		opcion = SALIR
 
 		@vistaSistema.imprimirCarreras(listaCarreras)
 		opcionValida = false
@@ -99,7 +98,7 @@ class Controller
 	private def pedirCarrerasPermisivo() : Hash(String, Array(Materia))
 		listaCarreras = @carreras.keys
 		listaMaterias = Hash(String, Array(Materia)).new()
-		opcion = ERROR
+		opcion = SALIR
 
 		@vistaSistema.imprimirCarreras(listaCarreras)
 		opcionValida = false
@@ -126,7 +125,7 @@ class Controller
 	end
 
 	private def seleccionarMateriaParaInscripcion()
-		materias = @alumno.misInscripciones()
+		materias = @alumno.obtenerMaterias()
 		@vistaMateriaController.imprimirMateriasInscripcion(materias)
 		opcion = pedirMateria(materias)
 
@@ -134,10 +133,10 @@ class Controller
 			return
 		end
 
-		if !@alumno.inscripcion(opcion-1)
-			@vistaSistema.imprimirMensaje("No hay mas cupos en esta materia!\n")
-		else
+		if @alumno.inscripcion(opcion-1)
 			@vistaSistema.imprimirMensaje("Inscripcion valida!\n")
+		else
+			@vistaSistema.imprimirMensaje("Error! Ya estas inscripto en esa materia!\n")
 		end
 	end
 
@@ -150,15 +149,17 @@ class Controller
 			return
 		end
 
-		@alumno.anularInscripcion(opcion-1)
-		@vistaSistema.imprimirMensaje("Inscripcion anulada!\n")
-		
+		if @alumno.anularInscripcion(opcion-1)
+			@vistaSistema.imprimirMensaje("Inscripcion anulada correctamente!\n")
+		else
+			@vistaSistema.imprimirMensaje("Error! Hubo un fallo en la anulacion de la inscripcion!\n")
+		end
 	end
 
 	private def pedirMateria(materias : Array(Materia)) : Int32
 		opcionValida = false
 		@vistaSistema.imprimirMensaje("Seleccione una materia (o 0 para Salir): ")
-		opcion = ERROR
+		opcion = SALIR
 
 		while !opcionValida
 			opcion = leerInt(gets.to_s.chomp)
@@ -172,30 +173,68 @@ class Controller
 		return opcion
 	end
 
-	private def rendirMateria(materias : Array(Materia))
-		@vistaSistema.imprimirMensaje("Seleccione la materia que va a rendir:\n")
-		opcion = seleccionarMateriaParaInscripcion()
+	private def rendirMateria()
+		opcionValida = false
+		materias = @alumno.misInscripciones()
+		
+		if materias.size == 0
+			return
+		end
 
-		@alumno.rendirMateria(opcion)
+		@vistaMateriaController.imprimirMateriasInscripcion(materias)
+
+		opcion = SALIR
+		opcion = pedirMateria(materias)
+
+		if opcion == SALIR
+			return
+		end
+
+		nota = SALIR
+		nota = pedirNota()
+
+		if nota == SALIR 
+			return
+		end
+
+		@alumno.rendirMateria(opcion-1, nota)
 	end
 
-	private def tramitarSimultaneidad() : Bool
-		@vistaSistema.imprimirMensaje("Seleccione una carrera (que no sea la misma) para Inscribirse\n")
-		simult = pedirCarrerasPermisivo()
+	private def pedirNota() : Int32
+		opcionValida = false
+		nota = SALIR
+		@vistaSistema.imprimirMensaje("Introduzca la nota correspondiente!\n")
+		while !opcionValida
+			nota = leerInt(gets.to_s.chomp)
 
-		return @alumno.agregarCarrera(simult)
+			if nota < SALIR || nota > 10
+				@vistaSistema.imprimirMensaje("Introduzca una nota valida, entre 0 y 10!\n")
+			else
+				opcionValida = true
+			end
+		end
+		return nota
 	end
 
-	private def cambiarCarreraActual() : Bool
-		@vistaSistema.imprimirMensaje("Seleccione su carrera actual\n")
+	private def tramitarSimultaneidad()
+		nuevaCarrera = pedirCarrerasPermisivo()
 
+		if @alumno.agregarCarrera(nuevaCarrera)
+			@vistaSistema.imprimirMensaje("Trámite Aceptado!\n")
+		else
+			@vistaSistema.imprimirMensaje("Trámite Rechazado! Selecciono la misma carrera que ya se encuentra cursando\n")
+		end
+
+	end
+
+	private def cambiarCarreraActual()
 		listaCarreras = @alumno.obtenerCarreras()
 		if listaCarreras.size == 1
 			@vistaSistema.imprimirMensaje("Solo esta cursando una carrera\n")
-			return false
+			return
 		end
 
-		opcion = ERROR
+		opcion = SALIR
 
 		@vistaSistema.imprimirCarreras(listaCarreras)
 		opcionValida = false
@@ -206,17 +245,19 @@ class Controller
 			if opcion < SALIR || opcion > listaCarreras.size
 				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
 			elsif opcion == SALIR
-				return false
+				return
 			end
 			opcionValida = true
 		end
 
 		@alumno.modificarCarreraActual(listaCarreras[opcion - 1])
-		return true
+		
+		seleccionada = @alumno.obtenerCarreraActual
+		printf "Carrera Seleccionada: %s\n", seleccionada
 	end
 
 	private def leerInt(input : String) : Int32
-		default = ERROR
+		default = SALIR
 		begin
 			return input.to_i
 		rescue

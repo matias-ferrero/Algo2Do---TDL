@@ -39,7 +39,7 @@ class Materia
 		if @inscripto == true
 			return false
 		end
-
+		@nota = 0
 		@inscripto = true
 		return true
 	end

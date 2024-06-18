@@ -14,7 +14,8 @@ class VistaMateriaController
 		materias.each do |materia|
 			@vistaMateria.imprimirMateriaInscripcion(i+=1,
 								 materia.obtenerNombre,
-								 materia.obtenerId)
+								 materia.obtenerId,
+								 materia.obtenerDocente)
 		end
 	end
 

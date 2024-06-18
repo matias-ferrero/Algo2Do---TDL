@@ -40,7 +40,7 @@ class Alumno
 	end
 
 	def inscripcion(opcion : Int32) : Bool
-		listaMaterias = misInscripciones()
+		listaMaterias = obtenerMaterias()
 		return listaMaterias[opcion].inscripcion()
 	end
 
@@ -49,15 +49,16 @@ class Alumno
 		return listaMaterias[opcion].anularInscripcion()
 	end
 
-	def rendirMateria(opcion : Int32)
+	def rendirMateria(opcion : Int32, nota : Int32)
 		listaMaterias = misInscripciones()
-		listaMaterias[opcion].rendir()
+		listaMaterias[opcion].rendir(nota)
 	end
 
 	def agregarCarrera(carreras : Hash(String, Array(Materia))) : Bool
+		listaCarreras = obtenerCarreras()
 		
-		@materias.each do |materia|
-			if materia == carreras.keys[0]
+		listaCarreras.each do |i|
+			if i == carreras.keys[0]
 				return false
 			end
 		end
