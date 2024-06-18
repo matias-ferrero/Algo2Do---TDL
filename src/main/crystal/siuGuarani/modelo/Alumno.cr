@@ -2,34 +2,68 @@ require "./Materia"
 
 class Alumno
 	@nombre : String
-	@padron : Int32
-	@carrera : String
-	@materias : Array(Materia)
+	@materias : Hash(String, Array(Materia))
+	@carreraActual : String
 
-	def initialize(nombre : String, padron : Int32, carrera : String)
+	def initialize(nombre : String, materias : Hash(String, Array(Materia)), carrera : String)
 		@nombre = nombre
-		@padron = padron
-		@carrera = carrera
-		@materias = Array(Materia).new
+		@materias = materias
+		@carreraActual = carrera
+	end
+
+	def obtenerNombre() : String
+		return @nombre
+	end
+
+	def obtenerCarreraActual() : String
+		return @carreraActual
+	end
+
+	def obtenerCarreras() : Array(String)
+		return @materias.keys		
 	end
 
 	def obtenerMaterias() : Array(Materia)
-		return @materias
+		return @materias[@carreraActual]
 	end
-	
+
+	def modificarCarreraActual(carreraActual : String)
+		@carreraActual = carreraActual
+	end
+
 	def historiaAcademica() : Array(Materia)
-		return @materias.select { |materia| materia.obtenerNota() > 0 }
+		return @materias[@carreraActual].select { |materia| materia.obtenerNota() > 0 }
 	end
 
 	def misInscripciones() : Array(Materia)
-		return @materias.select { |materia| materia.obtenerInscripcion() }
+		return @materias[@carreraActual].select { |materia| materia.obtenerInscripcion() }
 	end
 
 	def inscripcion(opcion : Int32) : Bool
-		return @materias[opcion].inscripcion()
+		listaMaterias = obtenerMaterias()
+		return listaMaterias[opcion].inscripcion()
 	end
 
-	def anularInscripcion(opcion : Int32)
-		@materias[opcion].anularInscripcion()
+	def anularInscripcion(opcion : Int32) : Bool
+		listaMaterias = misInscripciones()
+		return listaMaterias[opcion].anularInscripcion()
+	end
+
+	def rendirMateria(opcion : Int32, nota : Int32)
+		listaMaterias = misInscripciones()
+		listaMaterias[opcion].rendir(nota)
+	end
+
+	def agregarCarrera(carreras : Hash(String, Array(Materia))) : Bool
+		listaCarreras = obtenerCarreras()
+		
+		listaCarreras.each do |i|
+			if i == carreras.keys[0]
+				return false
+			end
+		end
+
+		@materias.merge!(carreras)
+		return true 
 	end
 end

@@ -1,22 +1,16 @@
 class VistaMateria
-	include Vista
-
-	def imprimirMensaje(mensaje : String)
-		printf "%s", mensaje
-	end
 
 	def imprimirMateriaInscripcion(indice : Int32,
 				       nombre : String,
-				       id : Int32,
-				       cantInscriptos : Int32,
-				       maxInscriptos : Int32)
-		printf "%d) %s (%d): %d/%d\n", indice, nombre, id, cantInscriptos, maxInscriptos
+				       id : String,
+				       docente : String)
+		printf "%d) %s (%s), Catedra: %s\n", indice, nombre, id, docente
 	end
 
 	def imprimirMateriaHistorial(indice : Int32,
 				     nombre : String,
-				     id : Int32,
+				     id : String,
 				     nota : Int32)
-		printf "%d) %s (%d): %d\n", indice, nombre, id, nota
+		printf "%d) %s (%s): %d\n", indice, nombre, id, nota
 	end
 end

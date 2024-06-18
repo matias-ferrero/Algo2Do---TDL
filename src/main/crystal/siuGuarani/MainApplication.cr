@@ -1,11 +1,10 @@
 require "./controller/Controller"
-require "./modelo/Alumno"
+#require "./modelo/Alumno"
 
 class Main
 
 	def self.main()
-		alumno = Alumno.new("Franco Ricciardo", 109907, "Ingenieria en Informatica")
-		controlador = Controller.new(alumno)
+		controlador = Controller.new()
 		while !controlador.salir()
 			controlador.menuPrincipal()
 		end
