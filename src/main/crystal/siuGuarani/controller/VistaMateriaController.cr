@@ -30,10 +30,6 @@ class VistaMateriaController
 	end
 
 	def inicializarMaterias() : Hash(String, Array(Materia))
-		return tablaDeMaterias()
-	end
-
-	private def tablaDeMaterias() : Hash(String, Array(Materia))
 		carreras = Hash(String, Array(Materia)).new()
 
 		carreras["Informatica"] ||= Array(Materia).new()

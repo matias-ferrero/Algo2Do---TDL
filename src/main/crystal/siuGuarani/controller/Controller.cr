@@ -28,12 +28,38 @@ class Controller
 		@vistaSistema.imprimirMensaje("Ingrese su nombre\n")
 		nombre = gets.to_s.chomp
 
-		materias = pedirCarrerasSinSalida()
+		materias = pedirPrimeraCarrera()
 		carreraActual = materias.keys[0]
 
 		return Alumno.new(nombre, materias, carreraActual)
 	end
-	
+
+	private def pedirPrimeraCarrera() : Hash(String, Array(Materia))
+		listaCarreras = @carreras.keys
+		listaMaterias = Hash(String, Array(Materia)).new()
+		opcion = SALIR
+
+		@vistaSistema.imprimirCarreras(listaCarreras)
+		opcionValida = false
+		
+		while !opcionValida
+			opcion = leerInt(gets.to_s.chomp)
+
+			if opcion <= SALIR || opcion > listaCarreras.size
+				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
+			end
+			opcionValida = true
+		end
+
+		clave = listaCarreras[opcion-1]
+
+		listaMaterias[clave] ||= Array(Materia).new()
+		listaMaterias[clave] = listaMaterias[clave] + @carreras[clave] 
+
+		return listaMaterias
+
+	end
+
 	def menuPrincipal()
 		@vistaSistema.mostrarMenu(@alumno.obtenerNombre())
 		opcion = leerInt(gets.to_s.chomp)
@@ -68,61 +94,6 @@ class Controller
 				@vistaSistema.imprimirMensaje("Seleccione una Opcion Correcta!\n")
 			end
 	end
-	
-	private def pedirCarrerasSinSalida() : Hash(String, Array(Materia))
-		listaCarreras = @carreras.keys
-		listaMaterias = Hash(String, Array(Materia)).new()
-		opcion = SALIR
-
-		@vistaSistema.imprimirCarreras(listaCarreras)
-		opcionValida = false
-		
-		while !opcionValida
-			opcion = leerInt(gets.to_s.chomp)
-
-			if opcion <= SALIR || opcion > listaCarreras.size
-				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
-			end
-			opcionValida = true
-		end
-
-		clave = listaCarreras[opcion-1]
-
-		listaMaterias[clave] ||= Array(Materia).new()
-		listaMaterias[clave] = listaMaterias[clave] + @carreras[clave] 
-
-		return listaMaterias
-
-	end
-	
-	private def pedirCarrerasPermisivo() : Hash(String, Array(Materia))
-		listaCarreras = @carreras.keys
-		listaMaterias = Hash(String, Array(Materia)).new()
-		opcion = SALIR
-
-		@vistaSistema.imprimirCarreras(listaCarreras)
-		opcionValida = false
-		
-		while !opcionValida
-			opcion = leerInt(gets.to_s.chomp)
-
-			if opcion < SALIR || opcion > listaCarreras.size
-				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
-			elsif opcion == SALIR
-				listaMaterias[@alumno.obtenerCarreraActual] = @alumno.obtenerMaterias
-				return listaMaterias
-			end
-			opcionValida = true
-		end
-
-		clave = listaCarreras[opcion-1]
-
-		listaMaterias[clave] ||= Array(Materia).new()
-		listaMaterias[clave] = listaMaterias[clave] + @carreras[clave] 
-
-		return listaMaterias
-
-	end
 
 	private def seleccionarMateriaParaInscripcion()
 		materias = @alumno.obtenerMaterias()
@@ -156,23 +127,6 @@ class Controller
 		end
 	end
 
-	private def pedirMateria(materias : Array(Materia)) : Int32
-		opcionValida = false
-		@vistaSistema.imprimirMensaje("Seleccione una materia (o 0 para Salir): ")
-		opcion = SALIR
-
-		while !opcionValida
-			opcion = leerInt(gets.to_s.chomp)
-
-			if opcion < SALIR || opcion > materias.size
-				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
-			else
-				opcionValida = true
-			end
-		end
-		return opcion
-	end
-
 	private def rendirMateria()
 		opcionValida = false
 		materias = @alumno.misInscripciones()
@@ -200,6 +154,23 @@ class Controller
 		@alumno.rendirMateria(opcion-1, nota)
 	end
 
+	private def pedirMateria(materias : Array(Materia)) : Int32
+		opcionValida = false
+		@vistaSistema.imprimirMensaje("Seleccione una materia (o 0 para Salir): ")
+		opcion = SALIR
+
+		while !opcionValida
+			opcion = leerInt(gets.to_s.chomp)
+
+			if opcion < SALIR || opcion > materias.size
+				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
+			else
+				opcionValida = true
+			end
+		end
+		return opcion
+	end
+
 	private def pedirNota() : Int32
 		opcionValida = false
 		nota = SALIR
@@ -217,13 +188,42 @@ class Controller
 	end
 
 	private def tramitarSimultaneidad()
-		nuevaCarrera = pedirCarrerasPermisivo()
+		nuevaCarrera = pedirSimultaneidad()
 
 		if @alumno.agregarCarrera(nuevaCarrera)
 			@vistaSistema.imprimirMensaje("Trámite Aceptado!\n")
 		else
 			@vistaSistema.imprimirMensaje("Trámite Rechazado! Selecciono la misma carrera que ya se encuentra cursando\n")
 		end
+
+	end
+
+	private def pedirSimultaneidad() : Hash(String, Array(Materia))
+		listaCarreras = @carreras.keys
+		listaMaterias = Hash(String, Array(Materia)).new()
+		opcion = SALIR
+
+		@vistaSistema.imprimirCarreras(listaCarreras)
+		opcionValida = false
+		
+		while !opcionValida
+			opcion = leerInt(gets.to_s.chomp)
+
+			if opcion < SALIR || opcion > listaCarreras.size
+				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
+			elsif opcion == SALIR
+				listaMaterias[@alumno.obtenerCarreraActual] = @alumno.obtenerMaterias
+				return listaMaterias
+			end
+			opcionValida = true
+		end
+
+		clave = listaCarreras[opcion-1]
+
+		listaMaterias[clave] ||= Array(Materia).new()
+		listaMaterias[clave] = listaMaterias[clave] + @carreras[clave] 
+
+		return listaMaterias
 
 	end
 
