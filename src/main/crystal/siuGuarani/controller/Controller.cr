@@ -47,8 +47,9 @@ class Controller
 
 			if opcion <= SALIR || opcion > listaCarreras.size
 				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
+			else
+				opcionValida = true
 			end
-			opcionValida = true
 		end
 
 		clave = listaCarreras[opcion-1]
@@ -157,12 +158,12 @@ class Controller
 	private def pedirMateria(materias : Array(Materia)) : Int32
 		opcionValida = false
 		@vistaSistema.imprimirMensaje("Seleccione una materia (o 0 para Salir): ")
-		opcion = SALIR
+		opcion = 0
 
 		while !opcionValida
 			opcion = leerInt(gets.to_s.chomp)
 
-			if opcion < SALIR || opcion > materias.size
+			if opcion < SALIR || opcion > materias.size || opcion.class != Int32
 				@vistaSistema.imprimirMensaje("Seleccione una opcion correcta!\n")
 			else
 				opcionValida = true
@@ -257,7 +258,7 @@ class Controller
 	end
 
 	private def leerInt(input : String) : Int32
-		default = SALIR
+		default = -1
 		begin
 			return input.to_i
 		rescue

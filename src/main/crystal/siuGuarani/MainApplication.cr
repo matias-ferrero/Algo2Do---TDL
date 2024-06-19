@@ -1,5 +1,4 @@
 require "./controller/Controller"
-#require "./modelo/Alumno"
 
 class Main
 
