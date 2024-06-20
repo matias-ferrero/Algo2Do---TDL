@@ -9,7 +9,7 @@ class VistaMateriaController
 		@vistaMateria = VistaMateria.new()
 	end
 
-	def imprimirMateriasInscripcion(materias : Array(Materia))
+	def imprimirMateriasInscripcion(materias)
 		i = 0
 		materias.each do |materia|
 			@vistaMateria.imprimirMateriaInscripcion(i+=1,
@@ -19,7 +19,7 @@ class VistaMateriaController
 		end
 	end
 
-	def imprimirMateriasHistorial(materias : Array(Materia))
+	def imprimirMateriasHistorial(materias)
 		i = 0
 		materias.each do |materia|
 			@vistaMateria.imprimirMateriaHistorial(i+=1,

@@ -25,7 +25,7 @@ class Controller
 	end
 
 	def signUp()
-		@vistaSistema.imprimirMensaje("Ingrese su nombre\n")
+		@vistaSistema.imprimirMensaje("Ingrese su nombre:\n")
 		nombre = gets.to_s.chomp
 
 		materias = pedirPrimeraCarrera()
@@ -180,7 +180,7 @@ class Controller
 			nota = leerInt(gets.to_s.chomp)
 
 			if nota < SALIR || nota > 10
-				@vistaSistema.imprimirMensaje("Introduzca una nota valida, entre 0 y 10!\n")
+				@vistaSistema.imprimirMensaje("Introduzca una nota valida, entre 1 y 10 (o 0 para salir)\n")
 			else
 				opcionValida = true
 			end

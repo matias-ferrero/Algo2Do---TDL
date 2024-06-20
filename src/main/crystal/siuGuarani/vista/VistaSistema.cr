@@ -1,10 +1,10 @@
 class VistaSistema
 
-    	def imprimirMensaje(mensaje : String)
+    	def imprimirMensaje(mensaje)
 		printf "%s", mensaje
 	end
 
-	def mostrarMenu(nombre : String)
+	def mostrarMenu(nombre)
 		printf "\n%s seleccione una opcion:\n", nombre
 		printf "1 : Historia Academica\n" 
 		printf "2 : Mis Inscripciones\n"
@@ -16,7 +16,7 @@ class VistaSistema
 		printf "0 : Salir\n"
 	end
 
-	def imprimirCarreras(nombres : Array(String))
+	def imprimirCarreras(nombres)
 		i = 1
 		nombres.each do |nombre|
 			printf "%d) %s\n", i, nombre

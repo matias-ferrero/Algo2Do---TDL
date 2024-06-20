@@ -1,16 +1,8 @@
 class Materia
-	@nombre : String
-	@id : String
-	@docente : String
 	@nota : Int32
 	@inscripto : Bool
 
-    	def initialize(nombre : String,
-		       id : String,
-		       docente : String)
-		@nombre = nombre
-		@id = id
-		@docente = docente
+    	def initialize(@nombre : String, @id : String, @docente : String)
         	@nota = 0
 		@inscripto = false
 	end
@@ -53,7 +45,7 @@ class Materia
 		return true
 	end
 	
-	def rendir(nota : Int32)
+	def rendir(nota)
 		@nota = nota
 
 		if @nota >= 4

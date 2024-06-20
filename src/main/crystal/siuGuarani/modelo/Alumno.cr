@@ -1,14 +1,8 @@
 require "./Materia"
 
 class Alumno
-	@nombre : String
-	@materias : Hash(String, Array(Materia))
-	@carreraActual : String
 
-	def initialize(nombre : String, materias : Hash(String, Array(Materia)), carrera : String)
-		@nombre = nombre
-		@materias = materias
-		@carreraActual = carrera
+	def initialize(@nombre : String, @materias : Hash(String, Array(Materia)), @carreraActual : String)
 	end
 
 	def obtenerNombre() : String
@@ -39,22 +33,22 @@ class Alumno
 		return @materias[@carreraActual].select { |materia| materia.obtenerInscripcion() }
 	end
 
-	def inscripcion(opcion : Int32) : Bool
+	def inscripcion(opcion) : Bool
 		listaMaterias = obtenerMaterias()
 		return listaMaterias[opcion].inscripcion()
 	end
 
-	def anularInscripcion(opcion : Int32) : Bool
+	def anularInscripcion(opcion) : Bool
 		listaMaterias = misInscripciones()
 		return listaMaterias[opcion].anularInscripcion()
 	end
 
-	def rendirMateria(opcion : Int32, nota : Int32)
+	def rendirMateria(opcion, nota)
 		listaMaterias = misInscripciones()
 		listaMaterias[opcion].rendir(nota)
 	end
 
-	def agregarCarrera(carreras : Hash(String, Array(Materia))) : Bool
+	def agregarCarrera(carreras) : Bool
 		listaCarreras = obtenerCarreras()
 		
 		listaCarreras.each do |i|
