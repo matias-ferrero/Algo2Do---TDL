@@ -2,7 +2,7 @@ class Materia
 	@nota : Int32
 	@inscripto : Bool
 
-    	def initialize(@nombre : String, @id : String, @docente : String)
+    	def initialize(@nombre : String, @id : Int32 | String, @docente : String)
         	@nota = 0
 		@inscripto = false
 	end
@@ -11,7 +11,7 @@ class Materia
 		return @nombre
 	end
 
-	def obtenerId() : String
+	def obtenerId() : Int32 | String
 		return @id
 	end
 
