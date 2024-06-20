@@ -155,7 +155,7 @@ class Controller
 		@alumno.rendirMateria(opcion-1, nota)
 	end
 
-	private def pedirMateria(materias : Array(Materia)) : Int32
+	private def pedirMateria(materias) : Int32
 		opcionValida = false
 		@vistaSistema.imprimirMensaje("Seleccione una materia (o 0 para Salir): ")
 		opcion = 0

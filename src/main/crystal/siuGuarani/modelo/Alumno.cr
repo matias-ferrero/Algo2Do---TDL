@@ -26,11 +26,11 @@ class Alumno
 	end
 
 	def historiaAcademica() : Array(Materia)
-		return @materias[@carreraActual].select { |materia| materia.obtenerNota() > 0 }
+		return @materias[@carreraActual].select(&.materiaCursada())
 	end
 
 	def misInscripciones() : Array(Materia)
-		return @materias[@carreraActual].select { |materia| materia.obtenerInscripcion() }
+		return @materias[@carreraActual].select(&.obtenerInscripcion())
 	end
 
 	def inscripcion(opcion) : Bool

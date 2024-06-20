@@ -47,9 +47,10 @@ class Materia
 	
 	def rendir(nota)
 		@nota = nota
+		anularInscripcion()
+	end
 
-		if @nota >= 4
-			@inscripto = false
-		end
+	def materiaCursada() : Bool
+		return @nota > 0
 	end
 end
