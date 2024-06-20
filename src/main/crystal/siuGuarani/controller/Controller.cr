@@ -75,7 +75,7 @@ class Controller
 			when 2
 				materias = @alumno.misInscripciones()
 				@vistaSistema.imprimirMensaje("Tus Incripciones son:\n")
-				@vistaMateriaController.imprimirMateriasHistorial(materias)
+				@vistaMateriaController.imprimirMateriasInscripcion(materias)
 			when 3
 				@vistaSistema.imprimirMensaje("Seleccione el indice de la Materia a la cual se quiere inscribir\n")
 				seleccionarMateriaParaInscripcion()
