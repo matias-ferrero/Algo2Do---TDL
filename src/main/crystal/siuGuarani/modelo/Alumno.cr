@@ -1,8 +1,11 @@
 require "./Materia"
 
 class Alumno
+	@nombre : String
+	@carreraActual : String
 
-	def initialize(@nombre : String, @materias : Hash(String, Array(Materia)), @carreraActual : String)
+	def initialize(@nombre, @materias : Hash(String, Array(Materia)), carreraActual : String)
+		@carreraActual = carreraActual
 	end
 
 	def obtenerNombre() : String
@@ -38,7 +41,7 @@ class Alumno
 		return listaMaterias[opcion].inscripcion()
 	end
 
-	def anularInscripcion(opcion) : Bool
+	def anularInscripcion(opcion : Int32) : Bool
 		listaMaterias = misInscripciones()
 		return listaMaterias[opcion].anularInscripcion()
 	end
