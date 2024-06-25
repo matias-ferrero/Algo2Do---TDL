@@ -70,12 +70,20 @@ class Controller
 				@terminado = true
 			when 1
 				materias = @alumno.historiaAcademica()
-				@vistaSistema.imprimirMensaje("Tu Historia Acamedica es:\n")
-				@vistaMateriaController.imprimirMateriasHistorial(materias)
+				if materias.size > 0
+					@vistaSistema.imprimirMensaje("Tu Historia Acamedica es:\n")
+					@vistaMateriaController.imprimirMateriasHistorial(materias)
+				else
+					@vistaSistema.imprimirMensaje("No cursaste ninguna materia!\n")
+				end
 			when 2
 				materias = @alumno.misInscripciones()
-				@vistaSistema.imprimirMensaje("Tus Incripciones son:\n")
-				@vistaMateriaController.imprimirMateriasInscripcion(materias)
+				if materias.size > 0
+					@vistaSistema.imprimirMensaje("Tus Incripciones son:\n")
+					@vistaMateriaController.imprimirMateriasInscripcion(materias)
+				else
+					@vistaSistema.imprimirMensaje("No estas cursando ninguna materia!\n")
+				end
 			when 3
 				@vistaSistema.imprimirMensaje("Seleccione el indice de la Materia a la cual se quiere inscribir\n")
 				seleccionarMateriaParaInscripcion()
@@ -114,6 +122,11 @@ class Controller
 
 	private def seleccionarMateriaParaAnular()
 		materias = @alumno.misInscripciones()
+		if materias.size == 0
+			@vistaSistema.imprimirMensaje("No estas cursando ninguna materia!\n")
+			return
+		end
+
 		@vistaMateriaController.imprimirMateriasInscripcion(materias)
 		opcion = pedirMateria(materias)
 
@@ -131,8 +144,8 @@ class Controller
 	private def rendirMateria()
 		opcionValida = false
 		materias = @alumno.misInscripciones()
-		
 		if materias.size == 0
+			@vistaSistema.imprimirMensaje("No estas cursando ninguna materia!\n")
 			return
 		end
 
