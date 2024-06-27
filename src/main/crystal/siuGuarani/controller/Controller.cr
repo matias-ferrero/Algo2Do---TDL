@@ -88,17 +88,32 @@ class Controller
 				@vistaSistema.imprimirMensaje("Seleccione el indice de la Materia a la cual se quiere inscribir\n")
 				seleccionarMateriaParaInscripcion()
 			when 4
-				@vistaSistema.imprimirMensaje("Seleccione el indice de la Materia a la cual se quiere desinscribir\n")
-				seleccionarMateriaParaAnular()
+				materias = @alumno.misInscripciones()
+				if materias.size > 0
+					@vistaSistema.imprimirMensaje("Seleccione el indice de la Materia a la cual se quiere desinscribir\n")
+					seleccionarMateriaParaAnular()
+				else
+					@vistaSistema.imprimirMensaje("No esta cursando ninguna materia!\n")
+				end
 			when 5
-				@vistaSistema.imprimirMensaje("Seleccione la materia que va a rendir:\n")
-				rendirMateria()
+				materias = @alumno.misInscripciones()
+				if materias.size > 0
+					@vistaSistema.imprimirMensaje("Seleccione la materia que va a rendir:\n")
+					rendirMateria()
+				else
+					@vistaSistema.imprimirMensaje("No esta cursando ninguna materia!\n")
+				end
 			when 6
 				@vistaSistema.imprimirMensaje("Seleccione una Carrera (que no sea la misma) para Inscribirse\n")
 				tramitarSimultaneidad()
 			when 7
-				@vistaSistema.imprimirMensaje("Seleccione en que carrera quiere posicionarse\n")
-				cambiarCarreraActual()
+				listaCarreras = @alumno.obtenerCarreras()
+				if listaCarreras.size == 1
+					@vistaSistema.imprimirMensaje("Solo esta cursando una carrera!\n")
+				else
+					@vistaSistema.imprimirMensaje("Seleccione en que carrera quiere posicionarse:\n")
+					cambiarCarreraActual()
+				end
 			else
 				@vistaSistema.imprimirMensaje("Seleccione una Opcion Correcta!\n")
 			end
@@ -122,11 +137,6 @@ class Controller
 
 	private def seleccionarMateriaParaAnular()
 		materias = @alumno.misInscripciones()
-		if materias.size == 0
-			@vistaSistema.imprimirMensaje("No estas cursando ninguna materia!\n")
-			return
-		end
-
 		@vistaMateriaController.imprimirMateriasInscripcion(materias)
 		opcion = pedirMateria(materias)
 
@@ -144,11 +154,6 @@ class Controller
 	private def rendirMateria()
 		opcionValida = false
 		materias = @alumno.misInscripciones()
-		if materias.size == 0
-			@vistaSistema.imprimirMensaje("No estas cursando ninguna materia!\n")
-			return
-		end
-
 		@vistaMateriaController.imprimirMateriasInscripcion(materias)
 
 		opcion = SALIR
@@ -242,14 +247,8 @@ class Controller
 	end
 
 	private def cambiarCarreraActual()
-		listaCarreras = @alumno.obtenerCarreras()
-		if listaCarreras.size == 1
-			@vistaSistema.imprimirMensaje("Solo esta cursando una carrera\n")
-			return
-		end
-
 		opcion = SALIR
-
+		listaCarreras = @alumno.obtenerCarreras()
 		@vistaSistema.imprimirCarreras(listaCarreras)
 		opcionValida = false
 		
