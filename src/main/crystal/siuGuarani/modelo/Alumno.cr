@@ -42,7 +42,7 @@ class Alumno
 	end
 
 	def anularInscripcion(opcion : Int32) : Bool
-		listaMaterias = misInscripciones()
+		listaMaterias : Array(Materia) = misInscripciones()
 		return listaMaterias[opcion].anularInscripcion()
 	end
 
