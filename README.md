@@ -16,7 +16,11 @@ Se debe ir al directorio en donde este el programa y luego se puede correr con e
 ```
     crystal .\MainApplication.cr
 ```
+PD: Si desea correr el programa con el intento de la Base de Datos para observar el error comentado, puede clonar la branch "comienzo-de-la-bdd" y previo a ejecutar el comando de arriba, debe correr 
 
+```
+    shards install
+```
 
 ## Video
 ----
