@@ -1,6 +1,6 @@
 # Algo2Do - TDL
 ---
-Utilizamos crystal para la creación de un SiuGuarani para la materia teorìa del lenaguje 
+Utilizamos Crystal para la creación de un SiuGuarani para la materia Teoría de Lenguajes de Programación
 
 
 ## Integrantes: 
@@ -29,7 +29,7 @@ Se debe ir al directorio en donde este el programa y luego se puede correr con e
 *   [NeuraLegion y Crystal - El lenguaje de programación Crystal (crystal-lang.org)](https://crystal-lang.org/2017/09/25/neuralegion-and-crystal/)
 
 ## Otros frameworks:  
-*   [Lucky](https://luckyframework.org/why-lucky)
+*   [Lucky](https://luckyframework.org/)
 *   [Kemal](https://kemalcr.com/)
 
 
